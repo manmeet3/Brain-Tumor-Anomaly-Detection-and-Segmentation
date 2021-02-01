@@ -1,0 +1,4 @@
+1) Find the imaging scheme followed by OASIS3 dataset: 
+  a) scanner type 
+  b) nth scan to look at to get the proper cross sectional image to determinate AD 
+2) Code for a new GAN anomaly detection architecture
