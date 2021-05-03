@@ -16,6 +16,8 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { FormsModule } from '@angular/forms';
 import { authInterceptorProviders } from './generic/auth.interceptor';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     HttpClientModule,
     IonicModule.forRoot(), 
-    CommonModule],
+    CommonModule, 
+    BrowserAnimationsModule,
+    MaterialModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, authInterceptorProviders],
   bootstrap: [AppComponent],
 })
