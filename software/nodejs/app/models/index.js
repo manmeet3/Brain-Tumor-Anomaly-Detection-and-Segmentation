@@ -7,6 +7,8 @@ db.mongoose = mongoose;
 
 db.technician = require("./technician.model");
 db.role = require("./role.model");
+db.scan = require("./scan.model");
+db.patient = require("./patient.model");
 
 db.ROLES = ["technician", "radiologist", "admin"];
 

@@ -1,19 +1,38 @@
-<div class="panel">
-  <input id="file-upload" class="hidden" type="file" accept="image/x-png,image/gif,image/jpeg" />
-  <label for="file-upload" id="file-drag" class="upload-box">
-    <div id="upload-caption">Drop image here or click to select</div>
-    <img id="image-preview" class="hidden" />
-  </label>
-</div>
-<div style="margin-bottom: 2rem;">
-  <input type="button" value="Submit" class="button" onclick="submitImage()" />
-  <input type="button" value="Clear" class="button" onclick="clearImage()" />
-</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>New Scan</mat-card-title>
+    <mat-card-subtitle>Provide scan details</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form">
+        <mat-label>Patient Name:</mat-label>
+        <input  placeholder="Enter Patient Name" [(ngModel)]="form.patientName" name="patientName"/>
+        <mat-label>Radiologist Name:</mat-label>
+        <input  placeholder="Enter Radiologist Name" [(ngModel)]="form.radiologistName" name="radiologistName"/>
+        <mat-label>Scan Date:</mat-label>
+        <input  placeholder="Enter Scan Date" [(ngModel)]="form.scanDate" name="scanDate"/>
+        <mat-label>Scan Date:</mat-label>
+        <input  placeholder="Enter Patient Email" [(ngModel)]="form.patientEmail" name="patientEmail"/>
+        <mat-label>Upload MRI:</mat-label>
+        <div class="panel">
+          <input id="file-upload" class="hidden" type="file" [(ngModel)]="form.mri" name="mri"/>
+          <label for="file-upload" id="file-drag" class="upload-box">
+            <div id="upload-caption">Drop image here or click to select</div>
+            <img id="image-preview" class="hidden" />
+          </label>
+        </div>
 
-<div id="image-box">
-  <img id="image-display" />
-  <div id="pred-result" class="hidden" width="400"></div>
-  <svg id="loader" class="hidden" viewBox="0 0 32 32" width="40" height="40">
-    <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
-  </svg>
-</div>
+        <div id="image-box">
+          <img id="image-display" />
+          <div id="pred-result" class="hidden" width="400"></div>
+          <svg id="loader" class="hidden" viewBox="0 0 32 32" width="40" height="40">
+            <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+          </svg>
+        </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="onSubmit()">Submit</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>
