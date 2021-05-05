@@ -16,7 +16,6 @@ export class TableComponent implements OnInit {
   ngOnInit() {
     this.userService.getScans().subscribe(
       data => {
-        console.log(data);
         this.dataSource = data;
       },
       err => {
