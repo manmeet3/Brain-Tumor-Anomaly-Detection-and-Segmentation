@@ -7,7 +7,7 @@ import { TokenStorageService } from './services/token-storage.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  private roles: string[] = [];
+  private role: string;
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
@@ -17,14 +17,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
-
+    console.log(this.isLoggedIn);
     if (this.isLoggedIn) {
+      console.log(this.tokenStorageService.getUser());
       const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
+      this.role = user.role;
+      this.showAdminBoard = this.role === 'admin';
+      this.showModeratorBoard = this.role === 'radiologist';
       this.username = user.username;
     }
   }

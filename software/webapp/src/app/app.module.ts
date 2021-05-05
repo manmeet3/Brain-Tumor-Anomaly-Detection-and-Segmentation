@@ -12,7 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardRadiologistComponent } from './board-radiologist/board-radiologist.component';
-import { BoardUserComponent } from './board-user/board-user.component';
+import { BoardTechnicianComponent } from './board-tecnician/board-technician.component';
 import { FormsModule } from '@angular/forms';
 import { authInterceptorProviders } from './generic/auth.interceptor';
 import { CommonModule } from '@angular/common';
@@ -28,16 +28,16 @@ import { MaterialModule } from './material/material.module';
     ProfileComponent,
     BoardAdminComponent,
     BoardRadiologistComponent,
-    BoardUserComponent
+    BoardTechnicianComponent
   ],
   entryComponents: [],
   imports: [
-    BrowserModule, 
-    AppRoutingModule, 
+    BrowserModule,
+    AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    IonicModule.forRoot(), 
-    CommonModule, 
+    IonicModule.forRoot(),
+    CommonModule,
     BrowserAnimationsModule,
     MaterialModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, authInterceptorProviders],

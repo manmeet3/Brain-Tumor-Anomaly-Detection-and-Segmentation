@@ -3,10 +3,10 @@ import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-board-user',
-  templateUrl: './board-user.component.html',
-  styleUrls: ['./board-user.component.scss'],
+  templateUrl: './board-technician.component.html',
+  styleUrls: ['./board-technician.component.scss'],
 })
-export class BoardUserComponent implements OnInit {
+export class BoardTechnicianComponent implements OnInit {
 
   form: any = {
     patientName: null,
@@ -15,7 +15,7 @@ export class BoardUserComponent implements OnInit {
     patientEmail: null,
     mri: null
   };
-  constructor(private userService: UserService) { 
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
@@ -30,5 +30,4 @@ export class BoardUserComponent implements OnInit {
       }
     );
   }
-  
 }

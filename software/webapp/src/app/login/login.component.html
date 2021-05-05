@@ -1,13 +1,13 @@
 <div class="col-md-12">
   <div class="card card-container">
     <input
-          type="text"
-          class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
-          required
-          #username="ngModel"
-        />
+      type="text"
+      class="form-control"
+      name="username"
+      [(ngModel)]="form.username"
+      required
+      #username="ngModel"
+    />
     <form
       *ngIf="!isLoggedIn"
       name="form"
@@ -65,7 +65,7 @@
     </form>
 
     <div class="alert alert-success" *ngIf="isLoggedIn">
-      Logged in as {{ roles }}.
+      Logged in as {{ role }}.
     </div>
   </div>
 </div>

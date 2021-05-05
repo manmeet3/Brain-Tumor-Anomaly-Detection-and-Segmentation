@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const Technician = mongoose.model(
-    "Technician",
+const Radiologist = mongoose.model(
+    "Radiologist",
     new mongoose.Schema({
                             username: String,
                             email: String,
@@ -11,4 +11,4 @@ const Technician = mongoose.model(
                         })
 );
 
-module.exports = Technician;
+module.exports = Radiologist;
