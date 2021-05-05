@@ -10,11 +10,13 @@ export class RegisterComponent implements OnInit {
   form: any = {
     username: null,
     email: null,
-    password: null
+    password: null,
+    role: null
   };
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
+  userRoles: any = ['Admin', 'Radiologist', 'Technician'];
 
   constructor(private authService: AuthService) { }
 
@@ -22,9 +24,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const { username, email, password } = this.form;
-
-    this.authService.register(username, email, password).subscribe(
+    const { username, email, password, role } = this.form;
+    this.authService.register(username, email, password, role).subscribe(
       data => {
         console.log(data);
         this.isSuccessful = true;

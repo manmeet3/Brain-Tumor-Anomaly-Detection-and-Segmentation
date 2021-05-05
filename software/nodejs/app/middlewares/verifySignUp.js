@@ -1,41 +1,111 @@
 const db = require("../models");
 const ROLES = db.ROLES;
 const Technician = db.technician;
+const Admin = db.admin;
+const Radiologist = db.radiologist;
 
-checkDuplicateUsernameOrEmail = (req, res, next) => {
+checkDuplicateAdmin = (req, res, next) => {
     // Username
-    Technician.findOne({
+    Admin.findOne({
       username: req.body.username
     }).exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-  
+
       if (user) {
         res.status(400).send({ message: "Failed! Username is already in use!" });
         return;
       }
-  
+
       // Email
-      Technician.findOne({
+      Admin.findOne({
         email: req.body.email
       }).exec((err, user) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
         }
-  
+
         if (user) {
           res.status(400).send({ message: "Failed! Email is already in use!" });
           return;
         }
-  
+
         next();
       });
     });
   };
-  
+
+checkDuplicateTechnician = (req, res, next) => {
+  // Username
+  Technician.findOne({
+                       username: req.body.username
+                     }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (user) {
+      res.status(400).send({ message: "Failed! Username is already in use!" });
+      return;
+    }
+
+    // Email
+    Technician.findOne({
+                         email: req.body.email
+                       }).exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (user) {
+        res.status(400).send({ message: "Failed! Email is already in use!" });
+        return;
+      }
+
+      next();
+    });
+  });
+};
+
+checkDuplicateRadiologist = (req, res, next) => {
+  // Username
+  Radiologist.findOne({
+                       username: req.body.username
+                     }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (user) {
+      res.status(400).send({ message: "Failed! Username is already in use!" });
+      return;
+    }
+
+    // Email
+    Radiologist.findOne({
+                         email: req.body.email
+                       }).exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (user) {
+        res.status(400).send({ message: "Failed! Email is already in use!" });
+        return;
+      }
+
+      next();
+    });
+  });
+};
+
   checkRolesExisted = (req, res, next) => {
     if (req.body.roles) {
       for (let i = 0; i < req.body.roles.length; i++) {
@@ -47,12 +117,14 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
         }
       }
     }
-  
+
     next();
   };
   
   const verifySignUp = {
-    checkDuplicateUsernameOrEmail,
+    checkDuplicateAdmin,
+    checkDuplicateTechnician,
+    checkDuplicateRadiologist,
     checkRolesExisted
   };
   

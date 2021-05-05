@@ -65,9 +65,14 @@
         </div>
       </div>
       <div class="form-group">
+        <label>Select Role</label>
+        <select  class="form-control" name= "role" [(ngModel)]="form.role">
+          <option class="form-control" [value]="roles" *ngFor="let roles of userRoles">{{roles}}<option>
+        </select>
+      </div>
+      <div class="form-group">
         <button class="btn btn-primary btn-block">Sign Up</button>
       </div>
-
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
         Signup failed!<br />{{ errorMessage }}
       </div>

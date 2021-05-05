@@ -29,4 +29,8 @@ module.exports = function(app) {
   app.post(
     "/api/createScan", controller.createScan
   );
+  //
+  // app.get(
+  //     "/api/inactive", controller.getInactiveUsers
+  // );
 };
