@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './services/token-storage.service';
 
 @Component({
@@ -13,19 +13,18 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username?: string;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
-    console.log(this.isLoggedIn);
     if (this.isLoggedIn) {
       console.log(this.tokenStorageService.getUser());
       const user = this.tokenStorageService.getUser();
       this.role = user.role;
-      this.showAdminBoard = this.role === 'admin';
-      this.showModeratorBoard = this.role === 'radiologist';
       this.username = user.username;
+      this.cd.markForCheck();
     }
+    this.cd.markForCheck();
   }
 
   logout(): void {
