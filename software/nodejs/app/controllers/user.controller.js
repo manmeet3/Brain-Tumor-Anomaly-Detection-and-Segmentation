@@ -18,6 +18,11 @@ exports.moderatorBoard = (req, res) => {
     res.status(200).send("Moderator Content.");
 };
 
+exports.getScans = async (req,res) => {
+    const scans = await Scan.find();
+    res.send(scans);
+}
+
 exports.createScan = (req, res) => {
     // Insert new Scan object
     const scan = new Scan({

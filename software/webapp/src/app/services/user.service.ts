@@ -33,4 +33,8 @@ export class UserService {
   createScan(scan: any): Observable<any>{
     return this.http.post(API_URL + 'createScan', scan, httpOptions);
   }
+
+  getScans(): Observable<any>{
+    return this.http.get(API_URL + 'getScans');
+  }
 }

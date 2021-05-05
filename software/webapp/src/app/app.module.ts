@@ -18,6 +18,7 @@ import { authInterceptorProviders } from './generic/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MaterialModule } from './material/material.module';
     ProfileComponent,
     BoardAdminComponent,
     BoardRadiologistComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    TableComponent
   ],
   entryComponents: [],
   imports: [
