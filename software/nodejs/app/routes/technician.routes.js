@@ -30,8 +30,11 @@ module.exports = function (app) {
         "/api/createScan", controller.createScan
     );
 
-    //
-    // app.get(
-    //     "/api/inactive", controller.getInactiveUsers
-    // );
+  app.post(
+    "/api/createScan", controller.createScan
+  );
+
+  app.get(
+      "/api/getScans", controller.getScans
+  );
 };
