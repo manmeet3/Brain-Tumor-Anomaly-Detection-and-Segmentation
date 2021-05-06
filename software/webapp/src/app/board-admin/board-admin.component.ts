@@ -11,13 +11,6 @@ import { User } from '../../model/user';
 export class BoardAdminComponent implements OnInit {
   public users: User[];
   form: FormGroup;
-  // users: Array<any> = [
-  //   { name: 'Pear', value: 'pear' },
-  //   { name: 'Plum', value: 'plum' },
-  //   { name: 'Kiwi', value: 'kiwi' },
-  //   { name: 'Apple', value: 'apple' },
-  //   { name: 'Lime', value: 'lime' }
-  // ];
   checked = false;
   errorMessage = '';
   constructor(private userService: UserService, private formBuilder: FormBuilder) {
