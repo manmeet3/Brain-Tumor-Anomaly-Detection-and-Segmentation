@@ -1,27 +1,3 @@
-<div id="app">
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-    <span>NeuroSignal</span>
-    <span class="menu-spacer"></span>
-    <div>
-      <a mat-button href="/home" routerLink="home">Home </a>
-<!--      <a mat-button href="/admin" routerLink="admin" *ngIf="showAdminBoard">Admin Board</a>-->
-<!--      <a mat-button href="/radiologist" routerLink="radiologist" *ngIf="showModeratorBoard">Moderator Board</a>-->
-<!--      <a mat-button href="/technician" *ngIf="isLoggedIn" routerLink="technician">Upload Scans</a>-->
-      <a mat-button href="/admin" routerLink="admin" *ngIf="showAdminBoard">Admin Board</a>
-      <a mat-button href="/radiologist" routerLink="radiologist" *ngIf="showModeratorBoard">Moderator Board</a>
-      <a mat-button href="/user" *ngIf="isLoggedIn" routerLink="user">Upload Scans</a>
-      <a mat-button href="/table" *ngIf="isLoggedIn" routerLink="table">View</a>
-      <span class="example-spacer"></span>
-      <a mat-button href="/register" class="ml-auto" routerLink="register" *ngIf="!isLoggedIn">Sign Up</a>
-      <a mat-button href="/login" class="ml-auto" routerLink="login" *ngIf="!isLoggedIn">Login</a>
-<!--      <a mat-button href="/profile" class="ml-auto" routerLink="profile" *ngIf="isLoggedIn">Profile</a>-->
-      <a mat-button href class="ml-auto" (click)="logout()" *ngIf="isLoggedIn">LogOut</a>
-    </div>
-  </mat-toolbar-row>
-  </mat-toolbar>
-
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<app-header></app-header>
+<router-outlet></router-outlet>
+<app-footer></app-footer>

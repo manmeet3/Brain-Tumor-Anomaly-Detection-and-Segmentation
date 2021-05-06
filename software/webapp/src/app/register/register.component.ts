@@ -16,8 +16,7 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  userRoles: any = [ 'Admin', 'Radiologist', 'Technician' ];
-
+  userRoles: any = ['Admin', 'Radiologist', 'Technician'];
   constructor(private authService: AuthService) {
   }
 

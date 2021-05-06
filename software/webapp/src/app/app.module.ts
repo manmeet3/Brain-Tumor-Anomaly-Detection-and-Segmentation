@@ -19,6 +19,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { TableComponent } from './table/table.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { TableComponent } from './table/table.component';
     BoardAdminComponent,
     BoardRadiologistComponent,
     BoardTechnicianComponent,
-    TableComponent
+    TableComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   entryComponents: [],
   imports: [

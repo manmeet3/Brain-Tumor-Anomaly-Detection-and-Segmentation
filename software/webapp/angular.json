@@ -31,7 +31,7 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["./node_modules/@angular/material/prebuilt-themes/indigo-pink.css", "src/theme/variables.scss", "src/global.scss"],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/indigo-pink.css", "src/theme/variables.scss", "src/global.scss","./node_modules/bulma/css/bulma.css"],
             "scripts": []
           },
           "configurations": {
