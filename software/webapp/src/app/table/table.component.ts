@@ -8,9 +8,9 @@ import { UserService } from '../services/user.service';
 })
 export class TableComponent implements OnInit {
 
-  displayedColumns: string[] = ['index', 'patientName', 'radiologistName', 
+  displayedColumns: string[] = ['index', 'patientName', 'radiologistName',
   'scanDate', 'processed', 'radiologistComments','email'];
-  dataSource;   
+  dataSource;
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -21,7 +21,7 @@ export class TableComponent implements OnInit {
       err => {
         // Error Message
       }
-    )
+    );
   }
 
 }

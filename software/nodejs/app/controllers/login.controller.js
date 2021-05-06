@@ -19,7 +19,6 @@ exports.login = (req, res) => {
             }
             if (!technician) {
 
-
                 Admin.findOne({
                                   username: req.body.username
                               })
@@ -40,7 +39,8 @@ exports.login = (req, res) => {
                                     }
 
                                     if (!radiologist) {
-                                        return res.status(404).send({message: "Technician Not found."});
+                                        return res.status(404)
+                                            .send({message: "user Not found"});
                                     }
 
                                     const passwordIsValid = bcrypt.compareSync(
@@ -52,6 +52,13 @@ exports.login = (req, res) => {
                                         return res.status(401).send({
                                                                         accessToken: null,
                                                                         message: "Invalid Password!"
+                                                                    });
+                                    }
+
+                                    if(!radiologist.active) {
+                                        return res.status(402).send({
+                                                                        accessToken: null,
+                                                                        message: "user is not Active!"
                                                                     });
                                     }
 
@@ -80,6 +87,12 @@ exports.login = (req, res) => {
                                                                 message: "Invalid Password!"
                                                             });
                             }
+                            if(!admin.active) {
+                                return res.status(402).send({
+                                                                accessToken: null,
+                                                                message: "user is not Active!"
+                                                            });
+                            }
 
                             const token = jwt.sign({id: admin.id}, config.secret, {
                                 expiresIn: 86400 // 24 hours
@@ -103,6 +116,13 @@ exports.login = (req, res) => {
                     return res.status(401).send({
                                                     accessToken: null,
                                                     message: "Invalid Password!"
+                                                });
+                }
+
+                if(!technician.active) {
+                    return res.status(402).send({
+                                                    accessToken: null,
+                                                    message: "user is not Active!"
                                                 });
                 }
 

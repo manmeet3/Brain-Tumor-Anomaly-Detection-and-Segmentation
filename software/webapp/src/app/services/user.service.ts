@@ -37,4 +37,13 @@ export class UserService {
   getScans(): Observable<any>{
     return this.http.get(API_URL + 'getScans');
   }
+
+  getInactiveUsers(): Observable<any>{
+    return this.http.get(API_URL + 'getInactiveUsers');
+  }
+
+  setUsersActive(users: string[]): Observable<any>{
+    console.log(users);
+    return this.http.put(API_URL + 'active', users);
+  }
 }

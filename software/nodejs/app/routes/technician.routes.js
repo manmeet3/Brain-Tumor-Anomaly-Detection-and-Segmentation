@@ -1,5 +1,6 @@
 const {authJwt} = require("../middlewares");
 const controller = require("../controllers/user.controller");
+const inactiveUserController = require("../controllers/userstates.controller");
 
 module.exports = function (app) {
     app.use(function (req, res, next) {
@@ -37,4 +38,13 @@ module.exports = function (app) {
   app.get(
       "/api/getScans", controller.getScans
   );
+
+  app.get(
+      "/api/getInactiveUsers", inactiveUserController.getInactiveUsers
+  );
+
+  app.put(
+        "/api/active", inactiveUserController.setUsersActive
+  );
+
 };

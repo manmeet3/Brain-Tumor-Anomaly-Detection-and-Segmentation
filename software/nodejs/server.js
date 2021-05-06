@@ -21,7 +21,8 @@ const Role = db.role;
 
 db.mongoose.connect("mongodb+srv://ronakmehta:ronakmehta@neurosignaldb.bschz.mongodb.net/NeuroSignal?retryWrites=true&w=majority", {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 }).then(() => {
     console.log("Successfully connected to MongoDB.");
     initial();

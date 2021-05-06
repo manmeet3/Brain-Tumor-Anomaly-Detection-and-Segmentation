@@ -13,7 +13,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardRadiologistComponent } from './board-radiologist/board-radiologist.component';
 import { BoardTechnicianComponent } from './board-tecnician/board-technician.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { authInterceptorProviders } from './generic/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -41,7 +41,9 @@ import { TableComponent } from './table/table.component';
     IonicModule.forRoot(),
     CommonModule,
     BrowserAnimationsModule,
-    MaterialModule],
+    MaterialModule,
+    ReactiveFormsModule
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, authInterceptorProviders],
   bootstrap: [AppComponent],
 })
