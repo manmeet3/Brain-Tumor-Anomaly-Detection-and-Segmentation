@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models");
 const Technician = db.technician;
+const Admin = db.admin;
+const Radiologist = db.radiologist;
 const Role = db.role;
 
 verifyToken = (req, res, next) => {
@@ -21,33 +23,15 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
-    Technician.findById(req.userId).exec((err, user) => {
+    Admin.findById(req.userId).exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-  
-      Role.find(
-        {
-          _id: { $in: user.roles }
-        },
-        (err, roles) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-  
-          for (let i = 0; i < roles.length; i++) {
-            if (roles[i].name === "admin") {
-              next();
-              return;
-            }
-          }
-  
-          res.status(403).send({ message: "Require Admin Role!" });
-          return;
-        }
-      );
+      if (user) {
+        return;
+      }
+      res.status(403).send({ message: "Require Admin Role!" });
     });
   };
   
@@ -57,28 +41,10 @@ isAdmin = (req, res, next) => {
         res.status(500).send({ message: err });
         return;
       }
-  
-      Role.find(
-        {
-          _id: { $in: user.roles }
-        },
-        (err, roles) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-  
-          for (let i = 0; i < roles.length; i++) {
-            if (roles[i].name === "radiologist") {
-              next();
-              return;
-            }
-          }
-  
-          res.status(403).send({ message: "Require Radiologist Role!" });
-          return;
-        }
-      );
+      if (user) {
+        return;
+      }
+      res.status(403).send({ message: "Require Radiologist Role!" });
     });
   };
   

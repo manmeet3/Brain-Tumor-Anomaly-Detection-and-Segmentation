@@ -61,3 +61,5 @@ exports.createScan = (req, res) => {
         res.send({ message: "Scan was added successfully!" });
     })
 };
+
+
