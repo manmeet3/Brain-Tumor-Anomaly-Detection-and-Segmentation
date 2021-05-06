@@ -1,16 +1,16 @@
-<div class="container">
-  <mat-card>
-    <mat-card-content>
-      <h2 class="example-h2">Approval required for below users</h2>
-      <section class="example-section">
-        <form [formGroup]="form" (ngSubmit)="approve()" novalidate>
-          <div fxLayout="row" fxLayoutAlign="space-around" center *ngFor="let user of users; let i=index">
-            <mat-checkbox class="example-margin" (change)="onCheckboxChange($event)">{{user.username}}
-              <label>: {{user.role}}</label> </mat-checkbox>
-          </div>
-          <button mat-raised-button color="primary">Approve</button>
-        </form>
-      </section>
-    </mat-card-content>
-  </mat-card>
+<section class="hero is-primary is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Approval required for below users</h1>
+    </div>
+  </div>
+</section>
+<div class="card-content">
+  <form class="box mybox admin-box" [formGroup]="form" (ngSubmit)="approve()" novalidate>
+    <div class="field" fxLayout="row" fxLayoutAlign="space-around" center *ngFor="let user of users; let i=index">
+      <mat-checkbox class="example-margin" (change)="onCheckboxChange($event)">{{user.username}}
+        <label>: {{user.role}}</label> </mat-checkbox>
+    </div>
+    <button class="button myButton fixed-button is-primary">Approve</button>
+  </form>
 </div>

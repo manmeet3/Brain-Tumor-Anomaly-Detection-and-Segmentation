@@ -1,0 +1,17 @@
+<div class="navbar is-dark">
+  <div class="navbar-brand">
+    <a class="navbar-item">
+      <img src="assets/logo.png"><a class="logo">NeuroSignal</a>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-end">
+      <a class="navbar-item" routerLink="/">Home</a>
+      <a *ngIf="isLoggedIn" class="navbar-item" routerLink="/table">View</a>
+      <a *ngIf="isLoggedIn" class="navbar-item" routerLink="/profile" >Profile</a>
+      <a class="navbar-item" routerLink="/register">SignUp</a>
+      <a *ngIf="isLoggedIn" class="navbar-item" routerLink="/" (click)="logout()">Logout</a>
+      <a *ngIf="!isLoggedIn" class="navbar-item" routerLink="/login">Login</a>
+    </div>
+  </div>
+</div>

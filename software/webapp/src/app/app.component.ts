@@ -13,22 +13,14 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username?: string;
 
-  constructor(private tokenStorageService: TokenStorageService, private cd: ChangeDetectorRef) { }
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
-      console.log(this.tokenStorageService.getUser());
       const user = this.tokenStorageService.getUser();
       this.role = user.role;
       this.username = user.username;
-      this.cd.markForCheck();
     }
-    this.cd.markForCheck();
-  }
-
-  logout(): void {
-    this.tokenStorageService.signOut();
-    window.location.reload();
   }
 }
