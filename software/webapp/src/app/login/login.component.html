@@ -13,39 +13,35 @@
         novalidate>
     <div class="field">
       <label class="label" for="username">UserName</label>
-      <div class="control">
-        <input class="input"
-               name="username"
-               [(ngModel)]="form.username"
-               required
-               #username="ngModel">
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="username.errors && f.submitted">
-          Username is required!
-        </div>
+      <input class="input"
+             name="username"
+             [(ngModel)]="form.username"
+             required
+             #username="ngModel">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="username.errors && f.submitted">
+        Username is required!
       </div>
-    </div>
+  </div>
 
     <div class="field">
       <label class="label" for="password">Password</label>
-      <div class="control">
-        <input class="input"
-               type="password"
-               name="password"
-               [(ngModel)]="form.password"
-               required
-               minlength="6"
-               #password="ngModel">
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="password.errors && f.submitted">
-          <div *ngIf="password.errors.required">Password is required</div>
-          <div *ngIf="password.errors.minlength">
-            Password must be at least 6 characters
-          </div>
+      <input class="input"
+             type="password"
+             name="password"
+             [(ngModel)]="form.password"
+             required
+             minlength="6"
+             #password="ngModel">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="password.errors && f.submitted">
+        <div *ngIf="password.errors.required">Password is required</div>
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 6 characters
         </div>
       </div>
     </div>
