@@ -1,0 +1,14 @@
+use CBICA_ABH file for showing a relatively normal scan.
+Refer to segmentation_brats17_inference colab for showing one with a large ssegmentation area.
+
+These 2 are the demo files. Have some other ones pre-processed ready to show
+
+
+https://github.com/pyushkevich/c3d/blob/master/doc/c3d.md
+https://socr.umich.edu/HTML5/BrainViewer/
+
+
+Create a microservice that does inference based on an input file path and dumps output to same file path.
+Web service should then store the output file into its DB and display that any time the URL is visited following initial processing.
+
+In the inference microservice, instantiate all the networks at startup, read file from disk based on inference request message and process the file (on GPU this should hopefully take 30 sec - 1 minute)
