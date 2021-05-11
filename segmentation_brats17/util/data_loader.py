@@ -58,8 +58,11 @@ class DataLoader():
             patient_names = [name for name in patient_names if 'brats' in name.lower()]
         return patient_names
 
-    def __load_one_volume(self, patient_name, mod):
-        patient_dir = os.path.join(self.data_root[0], patient_name)
+    def __load_one_volume(self, patient_dir, mod):
+        """
+        patient_dir: directory with unzipped files of 4 modalities
+        """
+        #patient_dir = os.path.join(self.data_root[0], patient_name)
         print("Patient dir: ", str(patient_dir))
         # for bats17
         if('nii' in self.file_postfix):
@@ -84,9 +87,10 @@ class DataLoader():
         volume = load_3d_volume_as_array(volume_name)
         return volume, volume_name
 
-    def load_data(self):
+    def load_data(self, input_patient_dirs):
         """
         load all the training/testing data
+        input_files_list: list of zips that contain 4 modalities of input files
         """
         self.patient_names = self.__get_patient_names()
         assert(len(self.patient_names)  > 0)
@@ -96,12 +100,13 @@ class DataLoader():
         Y = []
         bbox  = []
         in_size = []
-        data_num = self.data_num if (self.data_num is not None) else len(self.patient_names)
+        #data_num = self.data_num if (self.data_num is not None) else len(self.patient_names)
+        data_num = len(input_patient_dirs)
         for i in range(data_num):
             volume_list = []
             volume_name_list = []
             for mod_idx in range(len(self.modality_postfix)):
-                volume, volume_name = self.__load_one_volume(self.patient_names[i], self.modality_postfix[mod_idx])
+                volume, volume_name = self.__load_one_volume(input_patient_dirs[i], self.modality_postfix[mod_idx])
                 if(mod_idx == 0):
                     margin = 5
                     bbmin, bbmax = get_ND_bounding_box(volume, margin)
