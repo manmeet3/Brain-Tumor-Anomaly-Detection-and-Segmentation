@@ -1,0 +1,112 @@
+root@MS-desktop-ubuntu:/notebook/Masters_Project/segmentation_brats17# python3 test.py config17/test_all_class.txt 
+/usr/local/lib/python3.5/dist-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+data data_root test_data/ test_data/
+data save_folder result17 result17
+data data_names config17/test_names_temp.txt config17/test_names_temp.txt
+data modality_postfix [flair, t1, t1ce, t2] ['flair', 't1', 't1ce', 't2']
+data file_postfix nii.gz nii.gz
+network1ax net_type MSNet MSNet
+network1ax net_name MSNet_WT32 MSNet_WT32
+network1ax downsample_twice True True
+network1ax data_shape [19, 180, 160, 4] [19, 180, 160, 4]
+network1ax label_shape [11, 180, 160, 1] [11, 180, 160, 1]
+network1ax class_num 2 2
+network1ax model_file model17/msnet_wt32_20000.ckpt model17/msnet_wt32_20000.ckpt
+network1sg net_type MSNet MSNet
+network1sg net_name MSNet_WT32sg MSNet_WT32sg
+network1sg downsample_twice True True
+network1sg data_shape [19, 160, 180, 4] [19, 160, 180, 4]
+network1sg label_shape [11, 160, 180, 1] [11, 160, 180, 1]
+network1sg class_num 2 2
+network1sg model_file model17/msnet_wt32sg_20000.ckpt model17/msnet_wt32sg_20000.ckpt
+network1cr net_type MSNet MSNet
+network1cr net_name MSNet_WT32cr MSNet_WT32cr
+network1cr downsample_twice True True
+network1cr data_shape [19, 160, 160, 4] [19, 160, 160, 4]
+network1cr label_shape [11, 160, 160, 1] [11, 160, 160, 1]
+network1cr class_num 2 2
+network1cr model_file model17/msnet_wt32cr_20000.ckpt model17/msnet_wt32cr_20000.ckpt
+network2ax net_type MSNet MSNet
+network2ax net_name MSNet_TC32 MSNet_TC32
+network2ax downsample_twice True True
+network2ax data_shape [19, 96, 96, 4] [19, 96, 96, 4]
+network2ax label_shape [11, 96, 96, 1] [11, 96, 96, 1]
+network2ax class_num 2 2
+network2ax model_file model17/msnet_tc32_20000.ckpt model17/msnet_tc32_20000.ckpt
+network2sg net_type MSNet MSNet
+network2sg net_name MSNet_TC32sg MSNet_TC32sg
+network2sg downsample_twice True True
+network2sg data_shape [19, 96, 96, 4] [19, 96, 96, 4]
+network2sg label_shape [11, 96, 96, 1] [11, 96, 96, 1]
+network2sg class_num 2 2
+network2sg model_file model17/msnet_tc32sg_20000.ckpt model17/msnet_tc32sg_20000.ckpt
+network2cr net_type MSNet MSNet
+network2cr net_name MSNet_TC32cr MSNet_TC32cr
+network2cr downsample_twice True True
+network2cr data_shape [19, 96, 96, 4] [19, 96, 96, 4]
+network2cr label_shape [11, 96, 96, 1] [11, 96, 96, 1]
+network2cr class_num 2 2
+network2cr model_file model17/msnet_tc32cr_20000.ckpt model17/msnet_tc32cr_20000.ckpt
+network3ax net_type MSNet MSNet
+network3ax net_name MSNet_EN32 MSNet_EN32
+network3ax downsample_twice False False
+network3ax data_shape [19, 96, 96, 4] [19, 96, 96, 4]
+network3ax label_shape [11, 96, 96, 1] [11, 96, 96, 1]
+network3ax class_num 2 2
+network3ax model_file model17/msnet_en32_20000.ckpt model17/msnet_en32_20000.ckpt
+network3sg net_type MSNet MSNet
+network3sg net_name MSNet_EN32sg MSNet_EN32sg
+network3sg downsample_twice False False
+network3sg data_shape [19, 96, 96, 4] [19, 96, 96, 4]
+network3sg label_shape [11, 96, 96, 1] [11, 96, 96, 1]
+network3sg class_num 2 2
+network3sg model_file model17/msnet_en32sg_20000.ckpt model17/msnet_en32sg_20000.ckpt
+network3cr net_type MSNet MSNet
+network3cr net_name MSNet_EN32cr MSNet_EN32cr
+network3cr downsample_twice False False
+network3cr data_shape [19, 96, 96, 4] [19, 96, 96, 4]
+network3cr label_shape [11, 96, 96, 1] [11, 96, 96, 1]
+network3cr class_num 2 2
+network3cr model_file model17/msnet_en32cr_20000.ckpt model17/msnet_en32cr_20000.ckpt
+testing test_slice_direction all all
+init using else block at line 53
+whole tumor only is true? line 108
+
+no config_net2. Initing else block line 128
+not config_net3 line 200
+2021-05-11 05:15:38.878282: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2021-05-11 05:15:38.968434: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-05-11 05:15:38.968703: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce RTX 3070 major: 8 minor: 6 memoryClockRate(GHz): 1.77
+pciBusID: 0000:2d:00.0
+totalMemory: 7.79GiB freeMemory: 7.24GiB
+2021-05-11 05:15:38.968716: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce RTX 3070, pci bus id: 0000:2d:00.0, compute capability: 8.6)
+no config_net1
+whole tumor only is true line 274
+config_net2 not found line 282
+Else block no config_net3
+Patient dir:  test_data/Brats17_CBICA_ABH_1
+Image names:  ['Brats17_CBICA_ABH_1_flair.nii.gz', 'Brats17_CBICA_ABH_1_t1.nii.gz', 'Brats17_CBICA_ABH_1_t1ce.nii.gz', 'Brats17_CBICA_ABH_1_t2.nii.gz']
+checking:  flair
+vol name:  Brats17_CBICA_ABH_1_flair.nii.gz
+Loading:  test_data/Brats17_CBICA_ABH_1/Brats17_CBICA_ABH_1_flair.nii.gz
+Patient dir:  test_data/Brats17_CBICA_ABH_1
+Image names:  ['Brats17_CBICA_ABH_1_flair.nii.gz', 'Brats17_CBICA_ABH_1_t1.nii.gz', 'Brats17_CBICA_ABH_1_t1ce.nii.gz', 'Brats17_CBICA_ABH_1_t2.nii.gz']
+checking:  t1
+vol name:  Brats17_CBICA_ABH_1_t1.nii.gz
+Loading:  test_data/Brats17_CBICA_ABH_1/Brats17_CBICA_ABH_1_t1.nii.gz
+Patient dir:  test_data/Brats17_CBICA_ABH_1
+Image names:  ['Brats17_CBICA_ABH_1_flair.nii.gz', 'Brats17_CBICA_ABH_1_t1.nii.gz', 'Brats17_CBICA_ABH_1_t1ce.nii.gz', 'Brats17_CBICA_ABH_1_t2.nii.gz']
+checking:  t1ce
+vol name:  Brats17_CBICA_ABH_1_t1ce.nii.gz
+Loading:  test_data/Brats17_CBICA_ABH_1/Brats17_CBICA_ABH_1_t1ce.nii.gz
+Patient dir:  test_data/Brats17_CBICA_ABH_1
+Image names:  ['Brats17_CBICA_ABH_1_flair.nii.gz', 'Brats17_CBICA_ABH_1_t1.nii.gz', 'Brats17_CBICA_ABH_1_t1ce.nii.gz', 'Brats17_CBICA_ABH_1_t2.nii.gz']
+checking:  t2
+vol name:  Brats17_CBICA_ABH_1_t2.nii.gz
+Loading:  test_data/Brats17_CBICA_ABH_1/Brats17_CBICA_ABH_1_t2.nii.gz
+Data load, 100.0% finished
+image num:  1
+Brats17_CBICA_ABH_1
+test time 98.26814699172974

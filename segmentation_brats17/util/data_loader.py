@@ -25,7 +25,7 @@ class DataLoader():
             config: a dictionary representing parameters
         """
         self.config    = config
-        self.data_root = config['data_root'] if type(config['data_root']) is list else [config['data_root']]
+        #self.data_root = config['data_root'] if type(config['data_root']) is list else [config['data_root']]
         self.modality_postfix     = config.get('modality_postfix', ['flair','t1', 't1ce', 't2'])
         self.intensity_normalize  = config.get('intensity_normalize', [True, True, True, True])
         self.with_ground_truth    = config.get('with_ground_truth', False)
@@ -33,7 +33,7 @@ class DataLoader():
         self.label_convert_target = config.get('label_convert_target', None)
         self.label_postfix = config.get('label_postfix', 'seg')
         self.file_postfix  = config.get('file_postfix', 'nii.gz')
-        self.data_names    = config.get('data_names', None)
+        #self.data_names    = config.get('data_names', None)
         self.data_num      = config.get('data_num', None)
         self.data_resize   = config.get('data_resize', None)
         self.with_flip     = config.get('with_flip', False)
@@ -41,21 +41,15 @@ class DataLoader():
         if(self.label_convert_source and self.label_convert_target):
             assert(len(self.label_convert_source) == len(self.label_convert_target))
             
-    def __get_patient_names(self):
+    def __get_patient_names(self, paths_list):
         """
         get the list of patient names, if self.data_names id not None, then load patient 
         names from that file, otherwise search all the names automatically in data_root
         """
-        # use pre-defined patient names
-        if(self.data_names is not None):
-            assert(os.path.isfile(self.data_names))
-            with open(self.data_names) as f:
-                content = f.readlines()
-            patient_names = [x.strip() for x in content]
-        # use all the patient names in data_root
-        else:
-            patient_names = os.listdir(self.data_root[0])
-            patient_names = [name for name in patient_names if 'brats' in name.lower()]
+        patient_names = []
+        for name in paths_list:
+            patient_names.append(os.path.basename(os.path.normpath(name)))
+        #patient_names = [name for name in patient_names if 'brats' in name.lower()]
         return patient_names
 
     def __load_one_volume(self, patient_dir, mod):
@@ -92,7 +86,7 @@ class DataLoader():
         load all the training/testing data
         input_files_list: list of zips that contain 4 modalities of input files
         """
-        self.patient_names = self.__get_patient_names()
+        self.patient_names = self.__get_patient_names(input_patient_dirs)
         assert(len(self.patient_names)  > 0)
         ImageNames = []
         X = []
