@@ -7,11 +7,15 @@
   <div class="navbar-menu">
     <div class="navbar-end">
       <a class="navbar-item" routerLink="/">Home</a>
-      <a *ngIf="isLoggedIn" class="navbar-item" routerLink="/table">View</a>
-      <a *ngIf="isLoggedIn" class="navbar-item" routerLink="/profile" >Profile</a>
-      <a *ngIf="!isLoggedIn"class="navbar-item" routerLink="/register">SignUp</a>
-      <a *ngIf="isLoggedIn" class="navbar-item" routerLink="/" (click)="logout()">Logout</a>
-      <a *ngIf="!isLoggedIn" class="navbar-item" routerLink="/login">Login</a>
+      <div class="navbar-end" *ngIf="this.tokenStorageService.getToken()">
+        <a class="navbar-item" routerLink="/table">View</a>
+        <a class="navbar-item" routerLink="/profile" >Profile</a>
+        <a class="navbar-item" routerLink="/" (click)="logout()">Logout</a>
+      </div>
+      <div class="navbar-end" *ngIf="!this.tokenStorageService.getToken()">
+      <a class="navbar-item" routerLink="/register">SignUp</a>
+      <a class="navbar-item" routerLink="/login">Login</a>
+    </div>
     </div>
   </div>
 </div>

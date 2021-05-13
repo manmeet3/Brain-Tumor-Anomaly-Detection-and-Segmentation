@@ -43,7 +43,6 @@ export class UserService {
   }
 
   setUsersActive(users: string[]): Observable<any>{
-    console.log(users);
     return this.http.put(API_URL + 'active', users);
   }
 }
