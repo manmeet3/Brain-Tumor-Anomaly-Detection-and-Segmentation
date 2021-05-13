@@ -22,6 +22,32 @@ from util.train_test_func import *
 from util.parse_config import parse_config
 from train import NetFactory
 
+import redis
+import zipfile
+
+
+"""
+
+Request:
+
+{
+    "request_id": 1,
+    "filepaths": "/foo/bar"
+}
+
+ 
+
+Response:
+
+{
+    "request_id": 1,
+    "anomaly_score": int,
+    "anomaly_inference": file_path,
+    "Segmentation_file": file_path
+}
+
+"""
+
 class Segmentation():
     def __init__(self, config_file):
         # 1, load configure file
@@ -231,7 +257,7 @@ class Segmentation():
             saver3cr = tf.train.Saver(net3cr_vars)
             saver3cr.restore(self.sess, config_net3cr['model_file'])
 
-    def test(self, unzipped_patient_folder_paths):
+    def test(self, unzipped_patient_folder_paths, save_basefolder):
         # 4, load test images
         dataloader = DataLoader(self.config_data)
         #unzipped_patient_folders = ["/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_ABH_1", "/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_UAB_3451_1"]
@@ -241,7 +267,7 @@ class Segmentation():
 
         # 5, start to test
         test_slice_direction = self.config_test.get('test_slice_direction', 'all')
-        save_folder = self.config_data['save_folder']
+        save_folder = save_basefolder
         test_time = []
         struct = ndimage.generate_binary_structure(3, 2)
         margin = self.config_test.get('roi_patch_margin', 5)
@@ -363,23 +389,73 @@ class Segmentation():
             test_time.append(time.time() - t0)
             final_label = np.zeros(temp_size, np.int16)
             final_label = set_ND_volume_roi_with_bounding_box_range(final_label, temp_bbox[0], temp_bbox[1], out_label)
-            save_array_as_nifty_volume(final_label, save_folder+"/{0:}.nii.gz".format(temp_name), img_names[0])
-            print(temp_name)
+            file_name = save_folder+"/{0:}_mask.nii.gz".format(temp_name)
+            save_array_as_nifty_volume(final_label, file_name, img_names[0])
+            print("Saved: ", file_name)
         test_time = np.asarray(test_time)
         print('test time', test_time.mean())
         np.savetxt(save_folder + '/test_time.txt', test_time)
+        return file_name
 
     def close(self):
         self.sess.close()
 
+def unzip_and_process(message):
+    base_path = "/tmp/"
+    print(message)
+    #try:
+    if message['data'] == 1:
+        return
+    f_name = message['data'].decode('ascii')
+    if not os.path.isfile(f_name) or not f_name.endswith('.zip'):
+        ret_str = "[ERROR]:  Invalid path: ", f_name
+        print(ret_str)
+        return
+    with zipfile.ZipFile(f_name, 'r') as zip_ref:
+        folders = zip_ref.namelist()
+        top_folder = {item.split('/')[0] for item in folders}
+        zip_ref.extractall(base_path)
+        #for names in zip_ref.namelist():
+        #    zip_ref.extract(names, base_path)
+    if len(top_folder) > 1: 
+        print("[ERROR]: A zip should only contain one patient folder")
+        return
+    data_folders = [base_path + top_folder.pop()]
+    print("[INFO] Input data folders: ", data_folders)
+    output_mask = segmodel.test(data_folders, data_folders[0])
+    #t1w_file = 
+    output = None
+    return output
+    #except:
+    #    print("Error Processing this message")
+    
+
 if __name__ == '__main__':
-    if(len(sys.argv) != 2):
-        print('Number of arguments should be 2. e.g.')
-        print('    python test.py config17/test_all_class.txt')
-        exit()
-    config_file = str(sys.argv[1])
+    config_file = str("config17/test_all_class.txt")
+
     assert(os.path.isfile(config_file))
-    seg = Segmentation(config_file)
-    unzipped_patient_folders = ["/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_AXN_1"]#["/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_ABH_1", "/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_UAB_3451_1"]
-    seg.test(unzipped_patient_folders)
-    seg.close()
+    global segmodel
+    segmodel = Segmentation(config_file)
+    r = redis.Redis(host='localhost', port=6379, db=0)
+    p = r.pubsub()
+
+    p.subscribe("seg-handler")
+    while True:
+        message = p.get_message()
+        if message:
+            out_path = unzip_and_process(message)
+            if out_path is not None:
+                r.publish('seg-output', out_path)
+            time.sleep(1)
+        
+    #r.publish('seg-handler', "/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_ABH_1")
+    #seg.close()
+    ####################################
+    #unzipped_patient_folders = ["/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_AXN_1"]#["/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_ABH_1", "/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_UAB_3451_1"]
+    #seg.test(unzipped_patient_folders)
+    #print("PART 2")
+    #fldrs = ["/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_ABH_1", "/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_UAB_3451_1"]
+    #seg.test(fldrs)
+    
+    
+    

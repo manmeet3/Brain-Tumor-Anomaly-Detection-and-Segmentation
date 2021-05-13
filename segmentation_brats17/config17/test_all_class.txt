@@ -1,6 +1,6 @@
 [data]
-data_root         = test_data/
-save_folder       = result17
+data_root         = /tmp/
+save_folder       = /tmp/
 data_names        = config17/test_names_temp.txt
 modality_postfix  = [flair, t1, t1ce, t2]
 file_postfix      = nii.gz
