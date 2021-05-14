@@ -8,7 +8,8 @@
     <div class="navbar-end">
       <a class="navbar-item" routerLink="/">Home</a>
       <div class="navbar-end" *ngIf="this.tokenStorageService.getToken()">
-        <a class="navbar-item" routerLink="/table">View</a>
+        <a class="navbar-item" routerLink="/table">View Scans</a>
+        <a class="navbar-item" routerLink="/radiologist" *ngIf="this.tokenStorageService.getUser().role=='Radiologist'">Diagnosis</a>
         <a class="navbar-item" routerLink="/profile" >Profile</a>
         <a class="navbar-item" routerLink="/" (click)="logout()">Logout</a>
       </div>
