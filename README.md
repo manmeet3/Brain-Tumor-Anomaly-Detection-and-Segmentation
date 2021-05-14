@@ -5,9 +5,13 @@ University Name: http://www.sjsu.edu/
 Course: Data Scinece
 
 Professor: [Vijay Eranti](https://www.linkedin.com/in/vijay-eranti-6a6485/)
+
 Team: [Asha Aher](https://www.linkedin.com/in/asha-aher)
+
 Team: [Chinmay Vadgama](https://www.linkedin.com/in/chinmayvadgama/)
+
 Team: [Manmeet Singh](https://www.linkedin.com/in/msingh16/)
+
 Team: [Ronak Mehta](https://www.linkedin.com/in/ronakmehta21/)
 
 
