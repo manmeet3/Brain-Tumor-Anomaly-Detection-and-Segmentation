@@ -30,7 +30,10 @@
   <!-- Processed Column -->
   <ng-container matColumnDef="processed">
     <th mat-header-cell *matHeaderCellDef> Processed (Y/N) </th>
-    <td mat-cell *matCellDef="let element"></td>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button *ngIf="!element.isProcessed" (click)="getModelResults(element)">Get AI Results</button>
+      <button mat-raised-button *ngIf="element.isProcessed" (click)="viewModelResults(element)">View AI Results</button>
+    </td>
   </ng-container>
 
   <!-- Radiologist Comments Column -->
