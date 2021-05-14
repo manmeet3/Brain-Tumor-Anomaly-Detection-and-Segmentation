@@ -2,6 +2,12 @@ const db = require("../models");
 const Scan = db.scan;
 const Patient = db.patient;
 const process = require('process');
+const redis = require("redis");
+
+const client = redis.createClient();
+
+const subscriber = redis.createClient();
+const publisher = redis.createClient();
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -75,4 +81,30 @@ exports.viewModelResults = (req,res) =>{
     return res.send({message: "Some data"});
 }
 
+exports.getModelResults = async (req,res) =>{
+    Scan.findOne({_id: req.body.scanId}, (err,scan)=>{
+        if(err){
+            res.status(500).send({ message: err });
+            return;
+        }
+        if(scan){
+            subscriber.on("subscribe", function(channel, count) {
+            let publish = {"uid": scan._id, "zipfile": scan.mriPath}
+            publisher.publish("seg-handler", publish);
+            //publisher.publish("a channel", "another message");
+            });
+
+            subscriber.on("message", function(channel, message) {
+
+            console.log("Subscriber received message in channel '" + channel + "': " + message);
+            var jsonMsg = JSON.parse(message)
+            console.log(jsonMsg["uid"]);
+            console.log(jsonMsg["output"]);
+            });
+
+            subscriber.subscribe("seg-results");
+        }
+    })
+    return res.send({message: "Some data"});
+}
 
