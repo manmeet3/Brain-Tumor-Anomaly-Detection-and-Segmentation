@@ -1,7 +1,9 @@
 # Brain Tumor Anomaly Detection and 3D Segmentation using Multimodal Brain MRI Data
 
 University Name: http://www.sjsu.edu/
+
 Course: Data Scinece
+
 Professor: [Vijay Eranti](https://www.linkedin.com/in/vijay-eranti-6a6485/)
 Team: [Asha Aher](https://www.linkedin.com/in/asha-aher)
 Team: [Chinmay Vadgama](https://www.linkedin.com/in/chinmayvadgama/)
@@ -9,7 +11,8 @@ Team: [Manmeet Singh](https://www.linkedin.com/in/msingh16/)
 Team: [Ronak Mehta](https://www.linkedin.com/in/ronakmehta21/)
 
 
-# Project Introduction
+## Project Introduction
+
 Quantitative analysis of a brain MRI provides valuable information for regular health checkups, as well as treatment planning. Deep unsupervised learning has recently led to new approaches for Unsupervised Anomaly Detection. The main principle behind these works is to learn a model of normal brain anatomy by learning to compress and recover healthy data. As such, an MRI anomaly detection system can help physicians to determine the presence and severity of pathology. To demonstrate this capability from an end-user perspective, we train an unsupervised anomaly detection model using GANs.
 Gliomas are brain tumors starting in the glial cells. Gliomas can be low grade (slow growing) or high grade (fast growing). Physicians use the grade of a brain tumor based on gliomas to decide which treatment a patient needs. The condition of the tumor is of vital importance for the treatment [16]. In this paper, we propose a automated system to differentiate between normal brain and abnormal brain with tumor in the MRI images and also further segment the regions affected by the tumor. We train a 3D U-Net based model which provides a radiologist with preliminary diagnosis regarding regions of interest for a given patient.
 
