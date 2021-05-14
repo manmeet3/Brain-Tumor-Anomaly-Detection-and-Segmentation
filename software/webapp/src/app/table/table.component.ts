@@ -36,7 +36,6 @@ export class TableComponent implements OnInit {
     }
     this.userService.getModelResults(reqLoad).subscribe(
       data => {
-        console.log("Path",data);
         this.showMRI = true;
       },
       err => {
