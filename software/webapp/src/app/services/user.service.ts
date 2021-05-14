@@ -43,6 +43,10 @@ export class UserService {
     return this.http.post(API_URL + 'viewModelResults', scanId);
   }
 
+  getModelResults(scanId): Observable<any>{
+    return this.http.post(API_URL + 'getModelResults', scanId);
+  }
+
   getInactiveUsers(): Observable<any>{
     return this.http.get(API_URL + 'getInactiveUsers');
   }

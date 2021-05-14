@@ -20,6 +20,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets/niftiViewer.html",
               {
                 "glob": "**/*",
                 "input": "src/assets",

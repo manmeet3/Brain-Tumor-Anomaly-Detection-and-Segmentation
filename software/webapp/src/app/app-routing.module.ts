@@ -5,6 +5,7 @@ import { BoardRadiologistComponent } from './board-radiologist/board-radiologist
 import { BoardTechnicianComponent } from './board-tecnician/board-technician.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { NiftiComponent } from './nifti/nifti.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { TableComponent } from './table/table.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'table', component: TableComponent},
   { path: 'radiologist', component: BoardRadiologistComponent },
   { path: 'admin', component: BoardAdminComponent },
+  { path: 'nifti', component: NiftiComponent }
 ];
 
 @NgModule({

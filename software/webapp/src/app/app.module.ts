@@ -21,6 +21,7 @@ import { MaterialModule } from './material/material.module';
 import { TableComponent } from './table/table.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { NiftiComponent } from './nifti/nifti.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FooterComponent } from './footer/footer.component';
     BoardTechnicianComponent,
     TableComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    NiftiComponent
   ],
   entryComponents: [],
   imports: [

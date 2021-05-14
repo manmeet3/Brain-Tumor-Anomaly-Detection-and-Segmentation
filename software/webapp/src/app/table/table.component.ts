@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class TableComponent implements OnInit {
   displayedColumns: string[] = ['index', 'patientName', 'radiologistName',
   'scanDate', 'processed', 'radiologistComments','email'];
   dataSource;
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
@@ -30,6 +31,18 @@ export class TableComponent implements OnInit {
 
   getModelResults(patient){
     /* API to process patient mri and update database using patient details */
+    let reqLoad = {
+      'scanId': patient._id
+    }
+    this.userService.getModelResults(reqLoad).subscribe(
+      data => {
+        console.log("Path",data);
+        this.showMRI = true;
+      },
+      err => {
+        console.log(err);
+      }
+    )
   }
 
   viewModelResults(patient){
