@@ -2,7 +2,7 @@
 
 University Name: http://www.sjsu.edu/
 
-Course: Data Scinece
+Course: Data Science
 
 Professor: [Vijay Eranti](https://www.linkedin.com/in/vijay-eranti-6a6485/)
 
