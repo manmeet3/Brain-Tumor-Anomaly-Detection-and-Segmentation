@@ -25,6 +25,8 @@ from train import NetFactory
 import redis
 import zipfile
 
+import json
+import traceback
 
 """
 
@@ -401,33 +403,64 @@ class Segmentation():
         self.sess.close()
 
 def unzip_and_process(message):
-    base_path = "/tmp/"
+    base_path = "/notebook/Masters_Project/software/tmp"
+    outputfolder = "/notebook/Masters_Project/software/output/"
     print(message)
-    #try:
-    if message['data'] == 1:
-        return
-    f_name = message['data'].decode('ascii')
-    if not os.path.isfile(f_name) or not f_name.endswith('.zip'):
-        ret_str = "[ERROR]:  Invalid path: ", f_name
-        print(ret_str)
-        return
-    with zipfile.ZipFile(f_name, 'r') as zip_ref:
-        folders = zip_ref.namelist()
-        top_folder = {item.split('/')[0] for item in folders}
-        zip_ref.extractall(base_path)
-        #for names in zip_ref.namelist():
-        #    zip_ref.extract(names, base_path)
-    if len(top_folder) > 1: 
-        print("[ERROR]: A zip should only contain one patient folder")
-        return
-    data_folders = [base_path + top_folder.pop()]
-    print("[INFO] Input data folders: ", data_folders)
-    output_mask = segmodel.test(data_folders, data_folders[0])
-    #t1w_file = 
-    output = None
-    return output
-    #except:
-    #    print("Error Processing this message")
+    try:
+        if message['data'] == 1:
+            return
+        input_msg = message['data'].decode('ascii')
+        input_json = json.loads(input_msg)
+        print("Recvd input json: ", input_json)
+
+        f_name = input_json["zipfile"]
+        uid = input_json["uid"]
+        #outputfolder = input_json["outfolder"]
+
+        if not os.path.isfile(f_name) or not f_name.endswith('.zip'):
+            ret_str = "[ERROR]:  Invalid path: ", f_name
+            print(ret_str)
+            return
+        with zipfile.ZipFile(f_name, 'r') as zip_ref:
+            folders = zip_ref.namelist()
+            # Save top level folder name into set (same for all files)
+            top_folder = {item.split('/')[0] for item in folders}
+            #extract patient folder to base_path
+            zip_ref.extractall(base_path)
+        # One patient should be per zip file
+        if len(top_folder) > 1:
+            print("[ERROR]: A zip should only contain one patient folder")
+            return
+
+        # This is the path that the patient was unzipped to
+        data_folder_name = top_folder.pop()
+        data_folder = os.path.join(base_path, data_folder_name)
+        print("[INFO] data_folder: ", data_folder)
+
+        # arg1: PAth to patient folder as a list. arg2: Path to patient folder to store output to
+        output_mask = segmodel.test([data_folder], data_folder)
+
+    
+# Get T1W file for the data folder just processed
+        for f in os.listdir(data_folder):
+            if "t1.nii" in f and not "ROI" in f:
+                t1w_file = os.path.join(data_folder, f)
+
+        # Use C3d to concentate final MRI files
+        if not os.path.isdir(outputfolder):
+            print("Outfolder folder doesnt exist! ", outputfolder)
+        final_out_file = os.path.join(outputfolder, data_folder_name+"_final.nii.gz")
+        final_cmd = "c3d {0} {1} -replace 1 700 2 400 4 256 -add -o {2}".format(t1w_file, output_mask, final_out_file)
+        print(final_cmd)
+        os.system(final_cmd)
+        if os.path.isfile(final_out_file):
+            return uid, final_out_file
+        return None
+    except Exception as e:
+        print(e)
+        print(traceback.format_exc())
+        print("Error Processing this message")
+
     
 
 if __name__ == '__main__':
@@ -438,16 +471,28 @@ if __name__ == '__main__':
     segmodel = Segmentation(config_file)
     r = redis.Redis(host='localhost', port=6379, db=0)
     p = r.pubsub()
-
+    ret_json = {"uid": "", "output": ""}
     p.subscribe("seg-handler")
     while True:
         message = p.get_message()
         if message:
-            out_path = unzip_and_process(message)
-            if out_path is not None:
-                r.publish('seg-output', out_path)
+            retval = unzip_and_process(message)
+            if retval is not None:
+                ret_json["uid"] = str(retval[0])
+                ret_json["output"] = str(retval[1])
+                print(ret_json)
+                r.publish('seg-output', json.dumps(ret_json))
+            else:
+                r.publish('seg-output', "ERROR")
             time.sleep(1)
-        
+      
+      
+      
+      
+      
+    """
+    publish seg-handler "{\"uid\": 1234, \"zipfile\": \"/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_TCIA_105_1.zip\"}"
+    """  
     #r.publish('seg-handler', "/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_ABH_1")
     #seg.close()
     ####################################
