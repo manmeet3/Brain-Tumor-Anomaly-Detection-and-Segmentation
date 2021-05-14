@@ -26,28 +26,6 @@ import redis
 import zipfile
 
 
-"""
-
-Request:
-
-{
-    "request_id": 1,
-    "filepaths": "/foo/bar"
-}
-
- 
-
-Response:
-
-{
-    "request_id": 1,
-    "anomaly_score": int,
-    "anomaly_inference": file_path,
-    "Segmentation_file": file_path
-}
-
-"""
-
 class Segmentation():
     def __init__(self, config_file):
         # 1, load configure file
@@ -401,7 +379,7 @@ class Segmentation():
         self.sess.close()
 
 def unzip_and_process(message):
-    base_path = "/tmp/"
+    base_path = "/local/"
     print(message)
     #try:
     if message['data'] == 1:
@@ -413,19 +391,35 @@ def unzip_and_process(message):
         return
     with zipfile.ZipFile(f_name, 'r') as zip_ref:
         folders = zip_ref.namelist()
+        # Save top level folder name into set (same for all files)
         top_folder = {item.split('/')[0] for item in folders}
+        #extract patient folder to base_path
         zip_ref.extractall(base_path)
-        #for names in zip_ref.namelist():
-        #    zip_ref.extract(names, base_path)
+    # One patient should be per zip file
     if len(top_folder) > 1: 
         print("[ERROR]: A zip should only contain one patient folder")
         return
-    data_folders = [base_path + top_folder.pop()]
-    print("[INFO] Input data folders: ", data_folders)
-    output_mask = segmodel.test(data_folders, data_folders[0])
-    #t1w_file = 
-    output = None
-    return output
+        
+    # This is the path that the patient was unzipped to
+    data_folder = os.path.join(base_path, top_folder.pop())
+    print("[INFO] data_folder: ", data_folder)
+
+    # arg1: PAth to patient folder as a list. arg2: Path to patient folder to store output to
+    output_mask = segmodel.test([data_folder], data_folder)
+    
+    # Get T1W file for the data folder just processed
+    for f in os.listdir(data_folder):
+        if "t1.nii" in f and not "ROI" in f:
+            t1w_file = os.path.join(data_folder, f)
+
+    # Use C3d to concentate final MRI files
+    final_out_file = os.path.join(data_folder, "final_output.nii.gz")
+    final_cmd = "c3d {0} {1} -replace 1 700 2 400 4 256 -add -o {2}".format(t1w_file, output_mask, final_out_file)
+    print(final_cmd)
+    os.system(final_cmd)
+    if os.path.isfile(final_out_file):
+        return final_out_file
+    return None
     #except:
     #    print("Error Processing this message")
     
@@ -446,6 +440,8 @@ if __name__ == '__main__':
             out_path = unzip_and_process(message)
             if out_path is not None:
                 r.publish('seg-output', out_path)
+            else:
+                r.publish('seg-output', "ERROR")
             time.sleep(1)
         
     #r.publish('seg-handler', "/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_CBICA_ABH_1")
