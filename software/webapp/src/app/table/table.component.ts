@@ -24,4 +24,12 @@ export class TableComponent implements OnInit {
     );
   }
 
+  getModelResults(patient){
+    /* API to process patient mri and update database using patient details */
+  }
+
+  viewModelResults(patient){
+    /* API to get patient's particular mri scan and display it in Nifti viewer */
+  }
+
 }

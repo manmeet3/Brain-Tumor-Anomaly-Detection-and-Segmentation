@@ -30,7 +30,8 @@ exports.createScan = (req, res) => {
         radiologistName: req.body.radiologistName,
         scanDate: req.body.scanDate,
         patientEmail: req.body.patientEmail,
-        mri: req.body.mri
+        mri: req.body.mri,
+        isProcessed: false
     });
 
     scan.save((err, scan) => {
