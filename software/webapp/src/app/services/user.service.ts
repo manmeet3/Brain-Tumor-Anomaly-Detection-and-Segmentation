@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment'
 const API_URL = environment.API_URL;
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })
 };
 
 @Injectable({
@@ -32,11 +32,15 @@ export class UserService {
   }
 
   createScan(scan: any): Observable<any>{
-    return this.http.post(API_URL + 'createScan', scan, httpOptions);
+    return this.http.post(API_URL + 'createScan', scan);
   }
 
   getScans(): Observable<any>{
     return this.http.get(API_URL + 'getScans');
+  }
+
+  viewModelResults(scanId): Observable<any>{
+    return this.http.post(API_URL + 'viewModelResults', scanId);
   }
 
   getInactiveUsers(): Observable<any>{

@@ -1,3 +1,8 @@
 table {
     width: 100%;
   }
+:host {             // host targets selector: 'home'
+    display: block;
+    width: 100%;    // takes parent width        
+    height: 100%;   // takes parent height    
+}
