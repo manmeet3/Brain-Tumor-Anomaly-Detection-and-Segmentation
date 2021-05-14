@@ -28,7 +28,7 @@
     <div class="field">
       <label class="label">Upload MRI</label>
       <div class="panel">
-        <input id="file-upload" class="hidden" type="file" [(ngModel)]="form.mri" name="mri"/>
+        <input id="file-upload" class="hidden" type="file" name="mriImage" (change)="selectImage($event)"/>
         <label for="file-upload" id="file-drag" class="upload-box">
           <div id="upload-caption">Drop image here or click to select</div>
           <img id="image-preview" class="hidden" />

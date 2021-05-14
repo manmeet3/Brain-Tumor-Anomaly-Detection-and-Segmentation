@@ -7,7 +7,8 @@ const Scan = mongoose.model(
     radiologistName: String,
     scanDate: Date,
     patientEmail: String,
-    mri: Buffer,
+    mriPath: String,
+    processedMRIPath: String,
     isProcessed: Boolean
   })
 );
