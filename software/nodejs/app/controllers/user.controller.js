@@ -82,6 +82,32 @@ exports.viewModelResults = (req,res) =>{
     })
 }
 
+exports.emailResults = (req,res) =>{
+    const nodemailer = require("nodemailer");
+    const transporter = nodemailer.createTransport({
+    service: "hotmail",
+    auth: {
+        user: "neurosignal.reports@outlook.com",
+        pass: "neurosignal1234"
+    }
+    });
+
+    const options = {
+    from : "neurosignal.reports@outlook.com",
+    to : req.body.patientEmail,
+    subject : "What's up NeuroSignal",
+    text : "Hi "+req.body.patientName+",\n"+"You Report is ready\n"+"Your scaned dated: "+req.body.scanDate+" curated by "+req.body.radiologistName
+    };
+
+    transporter.sendMail(options,function(err,info){
+        if(err){
+            console.log(err);
+            return;
+        }
+        console.log("Sent :" + info.response);
+    })
+}
+
 exports.getModelResults = async (req,res) =>{
     Scan.findOne({_id: req.body.scanId}, (err,scan)=>{
         if(err){

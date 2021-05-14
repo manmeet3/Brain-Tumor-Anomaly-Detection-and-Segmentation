@@ -65,4 +65,22 @@ export class TableComponent implements OnInit {
     )
   }
 
+  emailResults(patient){
+    /* API to get patient's particular mri scan and display it in Nifti viewer */
+    let reqLoad = {
+      'patientName': patient.patientName,
+      'radiologistName': patient.radiologistName,
+      'scanDate': patient.scanDate,
+      'patientEmail': patient.patientEmail
+    }
+    this.userService.emailResults(reqLoad).subscribe(
+      data => {
+        this.showMRI = true;
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
 }

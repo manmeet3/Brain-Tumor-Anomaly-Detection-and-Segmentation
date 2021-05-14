@@ -49,6 +49,8 @@ module.exports = function (app) {
 
   app.post("/api/getModelResults", controller.getModelResults);
 
+  app.post("/api/emailResults", controller.emailResults);
+
   app.get(
       "/api/getScans", controller.getScans
   );
