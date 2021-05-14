@@ -403,8 +403,8 @@ class Segmentation():
         self.sess.close()
 
 def unzip_and_process(message):
-    base_path = "/notebook/Masters_Project/software/tmp"
-    outputfolder = "/notebook/Masters_Project/software/output/"
+    base_path = "/media/manmeet/Storage/Workdir/Masters_Project/software/tmp"
+    outputfolder = "/media/manmeet/Storage/Workdir/Masters_Project/software/output/"
     print(message)
     try:
         if message['data'] == 1:

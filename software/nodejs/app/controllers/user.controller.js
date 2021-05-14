@@ -12,15 +12,15 @@ const publisher = redis.createClient();
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
 };
-  
+
 exports.userBoard = (req, res) => {
     res.status(200).send("User Content.");
 };
-  
+
 exports.adminBoard = (req, res) => {
     res.status(200).send("Admin Content.");
 };
-  
+
 exports.moderatorBoard = (req, res) => {
     res.status(200).send("Moderator Content.");
 };
@@ -38,6 +38,7 @@ exports.createScan = async (req, res) => {
         scanDate: req.body.scanDate,
         patientEmail: req.body.patientEmail,
         mriPath: process.cwd()+'/uploads/'+req.body.mriPath,
+        processedMRIPath: '',
         isProcessed: false
     });
 
@@ -77,8 +78,8 @@ exports.viewModelResults = (req,res) =>{
             res.status(500).send({ message: err });
             return;
         }
+        return res.send({message: scan.processedMRIPath});
     })
-    return res.send({message: "Some data"});
 }
 
 exports.getModelResults = async (req,res) =>{
@@ -90,21 +91,29 @@ exports.getModelResults = async (req,res) =>{
         if(scan){
             subscriber.on("subscribe", function(channel, count) {
             let publish = {"uid": scan._id, "zipfile": scan.mriPath}
-            publisher.publish("seg-handler", publish);
+            publisher.publish("seg-handler", JSON.stringify(publish));
             //publisher.publish("a channel", "another message");
             });
 
             subscriber.on("message", function(channel, message) {
 
             console.log("Subscriber received message in channel '" + channel + "': " + message);
-            var jsonMsg = JSON.parse(message)
-            console.log(jsonMsg["uid"]);
-            console.log(jsonMsg["output"]);
+            if (message == "ERROR"){
+              console.log("Error processing");
+              return
+            }
+            else{
+              var jsonMsg = JSON.parse(message)
+              console.log(jsonMsg["uid"]);
+              console.log(jsonMsg["output"]);
+              scan.processedMRIPath = jsonMsg["output"]
+              scan.isProcessed = true
+              scan.save();
+            }
             });
 
-            subscriber.subscribe("seg-results");
+            subscriber.subscribe("seg-output");
         }
     })
     return res.send({message: "Some data"});
 }
-

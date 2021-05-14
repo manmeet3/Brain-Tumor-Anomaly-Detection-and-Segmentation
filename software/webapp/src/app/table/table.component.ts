@@ -52,8 +52,13 @@ export class TableComponent implements OnInit {
     }
     this.userService.viewModelResults(reqLoad).subscribe(
       data => {
-        console.log("Path",data);
+        console.log("Path",data)
+        var n = data.message.lastIndexOf('/')
+        var result = data.message.substring(n+1)
+        console.log("File:", result)
         this.showMRI = true;
+        window.location.href="http://localhost:8000/"+result
+
       },
       err => {
         console.log(err);
