@@ -90,7 +90,7 @@ exports.getModelResults = async (req,res) =>{
         if(scan){
             subscriber.on("subscribe", function(channel, count) {
             let publish = {"uid": scan._id, "zipfile": scan.mriPath}
-            publisher.publish("seg-handler", publish);
+            publisher.publish("seg-handler", JSON.stringify(publish));
             //publisher.publish("a channel", "another message");
             });
 
