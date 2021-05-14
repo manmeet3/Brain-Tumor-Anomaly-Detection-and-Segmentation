@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment'
 
-const API_URL = 'http://localhost:8080/api/';
+const API_URL = environment.API_URL;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

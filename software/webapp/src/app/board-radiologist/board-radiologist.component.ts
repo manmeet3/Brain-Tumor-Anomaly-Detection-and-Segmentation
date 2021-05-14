@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModeratorService } from '../services/moderator.service';
 
 @Component({
   selector: 'app-board-radiologist',
@@ -7,8 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardRadiologistComponent implements OnInit {
 
-  constructor() { }
+  allPatients;
+  isClicked = false;
+  constructor(private moderatorService: ModeratorService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.moderatorService.getPatients().subscribe(
+      data=>{
+        this.allPatients = data;
+      },
+      err=>{
+      }
+    )
+  }
+
+  onClick(patient){
+    this.isClicked = true;
+  }
 
 }
