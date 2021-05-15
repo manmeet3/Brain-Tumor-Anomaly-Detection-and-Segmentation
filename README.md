@@ -27,6 +27,8 @@ Our approach is based on the extraction of quantifiable features from MRIs for a
 
 
 ### Web Platform Architecture 
+![Web Architecture](https://github.com/manmeet3/Masters_Project/tree/master/architecture_diagrams/Web_Architecture.png?raw=true)
+
 
 
 
@@ -41,6 +43,7 @@ Web platform:
 * ng serve --port 8080
 
 ### Web Platform Screenshots
+
 
 
 
