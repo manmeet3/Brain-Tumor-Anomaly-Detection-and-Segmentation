@@ -18,7 +18,7 @@ The base model <a href="https://github.com/YeongHyeon/WGAN-TF">WGAN</a> is also 
 
 |z:64|z:128 (latent space walking)|
 |:---:|:---:|
-|<img src="./training/latent_walk/00000008.png" width="250">|<img src="/training/latent_walk/00000009.png"" width="250">|
+|<img src="./training/latent_walk/00000008.png" width="250">|<img src="./training/latent_walk/00000009.png" width="250">|
 
 
 </div>
