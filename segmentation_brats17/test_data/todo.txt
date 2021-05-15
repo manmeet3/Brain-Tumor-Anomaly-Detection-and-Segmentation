@@ -1,3 +1,0 @@
-need to find good demo worthy tumor and healthy scans. Checked out that refactor of segmentation code works.
-
-Need to check out whether calling infer function multiple times still returns same results (with same model tf session open)
