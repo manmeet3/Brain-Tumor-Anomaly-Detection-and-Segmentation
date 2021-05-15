@@ -68,6 +68,7 @@ REQUEST (from redis-cli): publish seg-handler "{\"uid\": 1234, \"zipfile\": \"/n
 RESPONSE: "{\"uid\": 1234, \"output\": \"/notebook/Masters_Project/segmentation_brats17/test_data/Brats17_TCIA_105_1_final.nii.gz\"}"
 ```
 
+## 6, Misc
 The response contains a path to a ready to view segmented .nii.gz file which can be loaded and viewed in any Nifty file viewer.
 
 This implementation is based on NiftyNet and Tensorflow. While NiftyNet provides more automatic pipelines for dataloading, training, testing and evaluation, this naive implementation only makes use of NiftyNet for network definition, so that it is lightweight and extensible. A demo that makes more use of NiftyNet for brain tumor segmentation is proivde at
