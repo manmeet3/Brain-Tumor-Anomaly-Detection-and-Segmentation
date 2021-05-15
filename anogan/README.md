@@ -59,4 +59,5 @@ The front half of the graph represents the state of the training phase 1.
 
 ## Reference
 Github: https://github.com/YeongHyeon/f-AnoGAN-TF
+
 [1] Schlegl, Thomas, et al (2019). <a href="https://www.sciencedirect.com/science/article/abs/pii/S1361841518302640">f-AnoGAN: Fast unsupervised anomaly detection with generative adversarial networks</a>. Medical image analysis 54 (2019): 30-44.
