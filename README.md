@@ -24,9 +24,32 @@ Gliomas are brain tumors starting in the glial cells. Gliomas can be low grade (
 Our approach is based on the extraction of quantifiable features from MRIs for accessing normal or the severe degree of change, or the status of a particular disease condition. Our use case is that the GAN will initially learn a nominal representation of the brain and then identify anomalous regions based on reconstruction loss for a given instance of the MRI image. Ultimately, we are building a web platform where the hospital technicians can upload patient MRI images, that are pre-classified for a radiologist to look at, who can then verify or nullify the classification provided by our classifier. This approach can be extended to multiple diseases in the future, as well as tools that allow radiologists to curate what they are specifically looking for. Finally, the patients will receive a notification with their diagnosis along with access to their MRI scans via our web platform.
 
 ### Project Architecture 
+![Application Architecture](Application_Architecture.png)
+
+### Web Platform Architecture 
+![Web Architecture](Web_Architecure.png)
+
+
+### Pre-requisites Set Up
+* Docker Container for inferencing
+* GPU
+
+Web platform: 
+* Install Angular 
+* npm install
+* node server.js
+* ng serve --port 8080
+
+### Web Platform Screenshots
+
+
+
+
 
 
 ### Reference Papers and code:
-https://www.kaggle.com/bonhart/brain-mri-data-visualization-unet-fpn
+* https://www.kaggle.com/bonhart/brain-mri-data-visualization-unet-fpn
+* https://pytorch.org/hub/mateuszbuda_brain-segmentation-pytorch_unet/
+* https://www.med.upenn.edu/sbia/brats2017.html
 
-https://pytorch.org/hub/mateuszbuda_brain-segmentation-pytorch_unet/
+
