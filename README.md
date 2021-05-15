@@ -27,9 +27,7 @@ Our approach is based on the extraction of quantifiable features from MRIs for a
 
 
 ### Web Platform Architecture 
-![Web Architecture](https://github.com/manmeet3/Masters_Project/Web_Architecture.png?raw=true)
-
-
+![Web Architecture](Web_Architecure.png)
 
 
 ### Pre-requisites Set Up
