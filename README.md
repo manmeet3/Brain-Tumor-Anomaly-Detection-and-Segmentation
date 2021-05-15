@@ -26,7 +26,29 @@ Our approach is based on the extraction of quantifiable features from MRIs for a
 ### Project Architecture 
 
 
-### Reference Papers and code:
-https://www.kaggle.com/bonhart/brain-mri-data-visualization-unet-fpn
+### Web Platform Architecture 
 
-https://pytorch.org/hub/mateuszbuda_brain-segmentation-pytorch_unet/
+
+
+### Pre-requisites Set Up
+* Docker Container for inferencing
+* GPU
+
+Web platform: 
+* Install Angular 
+* npm install
+* node server.js
+* ng serve --port 8080
+
+### Web Platform Screenshots
+
+
+
+
+
+### Reference Papers and code:
+* https://www.kaggle.com/bonhart/brain-mri-data-visualization-unet-fpn
+* https://pytorch.org/hub/mateuszbuda_brain-segmentation-pytorch_unet/
+* https://www.med.upenn.edu/sbia/brats2017.html
+
+
