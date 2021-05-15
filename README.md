@@ -42,8 +42,7 @@ Web platform:
 
 ### Web Platform Screenshots
 
-
-
+![Web](neuroImag.jpeg)
 
 
 
