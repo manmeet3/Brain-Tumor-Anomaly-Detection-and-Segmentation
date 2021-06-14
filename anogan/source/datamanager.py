@@ -6,7 +6,7 @@ from sklearn.utils import shuffle
 
 #from PIL import Image
 #from skimage.io import imread
-import cv2 
+import cv2
 
 class Dataset(object):
 
@@ -21,16 +21,16 @@ class Dataset(object):
         #tumor_img_paths = glob.glob("./resized_yes/*")
         imgs = []
         labels = []
-        
+
         for img_path in normal_img_paths:
             #image = Image.open(img_path).convert('LA')
             #image = imread(img_path)
-            
+
             image = cv2.imread(img_path, 0) # Read in grayscale mode
             #image = cv2.resize(img, (512, 512))
             imgs.append(asarray(image))
             labels.append(0)
-            
+
         for img_path in tumor_img_paths:
             #image = Image.open(img_path).convert('LA')
             #image = imread(img_path)
@@ -41,7 +41,7 @@ class Dataset(object):
             labels.append(1)
         print(f"x: {len(imgs)} y: {len(labels)}")
         self.X, self.y = shuffle(imgs, labels, random_state=0)
-        
+
         # Read all yes and no datasets. Create labels 1 (yes) and 0 (no)
         # Shuffle them
         # split into test and train
@@ -83,7 +83,7 @@ class Dataset(object):
         x_normal, y_normal = None, None
         x_abnormal, y_abnormal = None, None
         for yidx, y in enumerate(self.y):
-            
+
             x_tmp = np.expand_dims(self.X[yidx], axis=0)
             y_tmp = np.expand_dims(self.y[yidx], axis=0)
 
@@ -109,12 +109,17 @@ class Dataset(object):
             if(not(x_normal is None) and not(x_abnormal is None)):
                 if((x_normal.shape[0] >= 1000) or x_abnormal.shape[0] >= 150): break
 
-        self.x_tr, self.y_tr = x_normal[:600], y_normal[:600] 
+        self.x_tr, self.y_tr = x_normal[:600], y_normal[:600]
         self.x_te, self.y_te = x_normal[600:], y_normal[600:]
         self.x_te = np.append(self.x_te, x_abnormal, axis=0)
         self.y_te = np.append(self.y_te, y_abnormal, axis=0)
 
     def reset_idx(self): self.idx_tr, self.idx_te = 0, 0
+
+    def min_max_norm(self, x):
+
+        min_x, max_x = x.min(), x.max()
+        return x = (x - min_x + 1e-12) / (max_x - min_x + 1e-12)
 
     def next_train(self, batch_size=1, fix=False):
 
@@ -135,9 +140,8 @@ class Dataset(object):
             x_tr, y_tr = self.x_tr[-1-batch_size:-1], self.y_tr[-1-batch_size:-1]
             x_tr = np.expand_dims(x_tr, axis=3)
 
-        if(self.normalize):
-            min_x, max_x = x_tr.min(), x_tr.max()
-            x_tr = (x_tr - min_x) / (max_x - min_x)
+        for idx_x, _ in enumerate(x_tr):
+            x_tr[idx_x] = min_max_norm(x_tr[idx_x])
 
         return x_tr, y_tr, terminator
 
@@ -153,8 +157,7 @@ class Dataset(object):
             self.idx_te = 0
         else: self.idx_te = end
 
-        if(self.normalize):
-            min_x, max_x = x_te.min(), x_te.max()
-            x_te = (x_te - min_x) / (max_x - min_x)
+        for idx_x, _ in enumerate(x_te):
+            x_te[idx_x] = min_max_norm(x_te[idx_x])
 
         return x_te, y_te, terminator
