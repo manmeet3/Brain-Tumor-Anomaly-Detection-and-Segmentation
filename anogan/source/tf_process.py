@@ -72,7 +72,7 @@ def random_noise(batch_size, zdim):
 def training_wgan(neuralnet, dataset, epochs, batch_size, normalize=True):
 
     print("\nTraining WGAN to %d epochs (%d of minibatch size)" %(epochs, batch_size))
-    #neuralnet.load_parameter(model='model_checker') 
+    #neuralnet.load_parameter(model='model_checker')
     make_dir(path="training")
     result_list = ["from_noise"]
     if(neuralnet.zdim == 2): result_list.append("latent_walk")
@@ -111,7 +111,7 @@ def training_wgan(neuralnet, dataset, epochs, batch_size, normalize=True):
             step_dict = neuralnet.step(x=x_tr, z=z_tr, iteration=iteration, training=True, phase=0)
 
             iteration += 1
-            if(terminator): 
+            if(terminator):
                 print("training_wgan(): -- dataset terminator reached --")
                 break
 
@@ -148,11 +148,11 @@ def training_izi(neuralnet, dataset, epochs, batch_size, normalize=True, iterati
             print(f"training_izi(): Training iteration {iteration}")
             x_tr, y_tr, terminator = dataset.next_train(batch_size)
             z_tr = random_noise(x_tr.shape[0], neuralnet.zdim)
-            
+
             step_dict = neuralnet.step(x=x_tr, z=z_tr, iteration=iteration, training=True, phase=1)
 
             iteration += 1
-            if(terminator): 
+            if(terminator):
                 print("training_izi(): -- dataset terminator reached --")
                 break
 
@@ -170,7 +170,7 @@ def test(neuralnet, dataset, batch_size):
     for result_name in result_list: make_dir(path=os.path.join("test", result_name))
 
     loss_list = []
-    
+
     while(True):
         x_te, y_te, terminator = dataset.next_test(1)
         z_te = random_noise(1, neuralnet.zdim)
@@ -181,8 +181,8 @@ def test(neuralnet, dataset, batch_size):
         if(y_te[0] == 1):
             loss_list.append(score_anomaly)
 
-        if(terminator): 
-            
+        if(terminator):
+
             break
 
     loss_list = np.asarray(loss_list)
@@ -195,7 +195,7 @@ def test(neuralnet, dataset, batch_size):
     fcsv.write("class, loss, outlier\n")
     testnum = 0
     z_enc_tot, y_te_tot = None, None
-    loss4box = [[], [], [], [], [], [], [], [], [], []]
+    loss4box = [[], []]
     while(True):
         x_te, y_te, terminator = dataset.next_test(1)
         z_te = random_noise(1, neuralnet.zdim)
