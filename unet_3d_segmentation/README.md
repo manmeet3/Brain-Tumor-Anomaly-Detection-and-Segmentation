@@ -1,5 +1,5 @@
 # Overview
-This repository provides source code for brain tumor segmentation with BraTS dataset. The method is detailed in [1]
+This is the tumor segmentation stage of the [brain tumor detection pipeline](../README.md): once a scan is flagged as abnormal, this model localizes the tumor. It provides source code for brain tumor segmentation with the BraTS dataset, using a 3D U-Net based cascaded architecture. The method is detailed in [1].
 
 # Requirements
 * A CUDA compatable GPU with >= 6GB is recommended for training. We used an Nvidia GTX 3070 for training.

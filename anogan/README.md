@@ -1,8 +1,10 @@
 f-AnoGAN: Fast unsupervised anomaly detection with generative adversarial networks
 =====
 
-TensorFlow implementation of <a href="https://www.sciencedirect.com/science/article/abs/pii/S1361841518302640">f-AnoGAN</a> with MNIST dataset [1].  
-The base model <a href="https://github.com/YeongHyeon/WGAN-TF">WGAN</a> is also implemented with TensorFlow.   
+This is the primary anomaly detection model for the [brain tumor detection pipeline](../README.md): a TensorFlow implementation of <a href="https://www.sciencedirect.com/science/article/abs/pii/S1361841518302640">f-AnoGAN</a> [1], adapted here for brain MRI and demonstrated below on MNIST.
+The base model <a href="https://github.com/YeongHyeon/WGAN-TF">WGAN</a> is also implemented with TensorFlow.
+
+Training is a two-phase process: first a WGAN learns to generate realistic (normal) brain images from random noise, then an encoder is trained to map real images into that GAN's latent space (`izi` training) so that any input image can be quickly reconstructed and compared against the original — large reconstruction error indicates an anomaly.
 
 
 
